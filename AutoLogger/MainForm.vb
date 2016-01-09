@@ -54,6 +54,20 @@ Public Class Autologger
 
     End Sub
 
+    Private Function Decrypt(toDecrypt As String) As String
+        Dim decrypted As String = ""
+        For i As Integer = 0 To (toDecrypt.Length - 1)
+            Dim ourChar = toDecrypt.Chars(i)
+            Dim ourInt = Convert.ToInt32(ourChar)
+            ourInt = ourInt * 2
+            ourInt = ourInt - 5
+            ourInt = Math.Sqrt(ourInt)
+            ourChar = Convert.ToChar(ourInt)
+            decrypted = String.Concat(decrypted, ourChar)
+        Next
+        Return decrypted
+    End Function
+
     'Sub: Attempt_Login(String, String, String) will naviagate to a website and attempt to login using the given url, user name, and password
     Private Sub Attempt_Login(websiteInfo As WebsiteInformation)
         Dim IEInstance As Object
@@ -104,7 +118,7 @@ Public Class Autologger
         Dim lineCounter As Integer = 0
         loginIndex = 0
         Do Until fileReader.Peek = -1
-            fileLines(lineCounter) = fileReader.ReadLine
+            fileLines(lineCounter) = Decrypt(fileReader.ReadLine)
             lineCounter += 1
             If (lineCounter = 7) Then
                 lineCounter = 0
